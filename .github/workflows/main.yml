@@ -23,13 +23,10 @@ jobs:
       - name: Make gradlew executable
         run: chmod +x ./gradlew
 
-      - name: Build APK
-        run: |
-  keytool -genkey -v -keystore release.keystore -alias androidkey -keyalg RSA -keysize 2048 -validity 10000 -storepass android -keypass android -dname "CN=Telegram, OU=, O=, L=, S=, C=US"
-  ./gradlew assembleAfatRelease
+      - name: Generate keystore
+        run: keytool -genkey -v -keystore release.keystore -alias androidkey -keyalg RSA -keysize 2048 -validity 10000 -storepass android -keypass android -dname "CN=Telegram, OU=App, O=App, L=City, S=State, C=US"
 
-      - name: Upload APK
-        uses: actions/upload-artifact@v4
-        with:
+      - name: Build APK
+        run: ./gradlew assembleAfatRelease --warning-mode all -Dorg.gradle.warning.mode=none
           name: telegram-apk
           path: TMessagesProj_App/build/outputs/apk/
