@@ -24,7 +24,9 @@ jobs:
         run: chmod +x ./gradlew
 
       - name: Build APK
-        run: ./gradlew assembleAfatRelease --warning-mode all -Dorg.gradle.warning.mode=none
+        run: |
+  keytool -genkey -v -keystore release.keystore -alias androidkey -keyalg RSA -keysize 2048 -validity 10000 -storepass android -keypass android -dname "CN=Telegram, OU=, O=, L=, S=, C=US"
+  ./gradlew assembleAfatRelease
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
