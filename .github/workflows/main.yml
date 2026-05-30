@@ -24,10 +24,10 @@ jobs:
         run: chmod +x ./gradlew
 
       - name: Build APK
-        run: ./gradlew assembleAfatDebug -Dorg.gradle.warning.mode=none
+        run: ./gradlew assembleAfatRelease -Dorg.gradle.warning.mode=none
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: telegram-apk
-          path: TMessagesProj_App/build/outputs/apk/afat/debug/
+          path: TMessagesProj_App/build/outputs/apk/
